@@ -56,28 +56,30 @@ const Home = () => {
         {filtreliHaberler.length === 0 ? (
           <p>Henüz haber bulunamadı.</p>
         ) : (
+          {/* Haber Listesi */}
+        {filtreliHaberler.length === 0 ? (
+          <p>Henüz haber bulunamadı.</p>
+        ) : (
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              gap: "1.5rem",
+              gridTemplateColumns: "repeat(auto-fill, minmax(100%, 1fr))",
+              gap: "1rem",
               paddingTop: "1rem",
             }}
           >
             {filtreliHaberler.map((haber) => {
               const renk = kategoriRenkleri[haber.kategori] || "#7f8c8d";
-
               return (
                 <div
                   key={haber._id}
                   style={{
                     border: "1px solid #ddd",
                     borderRadius: "10px",
-                    padding: "1.2rem",
+                    padding: "1rem",
                     backgroundColor: "#f9f9f9",
                     boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
                     transition: "transform 0.2s ease",
-                    cursor: "pointer",
                   }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.transform = "scale(1.02)")
@@ -92,7 +94,6 @@ const Home = () => {
                       ? haber.metin.substring(0, 150) + "..."
                       : haber.metin}
                   </p>
-
                   <span
                     style={{
                       display: "inline-block",
@@ -115,6 +116,11 @@ const Home = () => {
       </div>
     </div>
   );
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Home;
+
