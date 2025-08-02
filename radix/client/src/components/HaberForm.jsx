@@ -48,12 +48,12 @@ const HaberForm = () => {
         value={kategori}
         onChange={(e) => setKategori(e.target.value)}
       >
-        <option value="dunya">Dünya</option>
-        <option value="siyaset">Siyaset</option>
-        <option value="futbol">Futbol</option>
-        <option value="dizi">Dizi</option>
-        <option value="sinema">Sinema</option>
-        <option value="magazin">Magazin</option>
+        <option value="Tarot">Tarot</option>
+        <option value="Spiritüel Dünya">Spiritüel Dünya</option>
+        <option value="Manifest Dünyası">Manifest Dünyası</option>
+        <option value="Psişik">Psişik</option>
+        <option value="Okudugum Kitaplar">Okudugum Kitaplar</option>
+        <option value="Web Geliştirme">Web Geliştirme</option>
       </Input>
 
       <Button type="submit" color="primary" className="mt-3" block>
@@ -64,3 +64,4 @@ const HaberForm = () => {
 };
 
 export default HaberForm;
+
