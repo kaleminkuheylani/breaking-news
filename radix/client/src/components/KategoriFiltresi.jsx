@@ -1,7 +1,7 @@
 // src/components/KategoriFiltresi.js
 import React from "react";
 
-const kategoriler = ["Tarot","Spiritüel Dünya","Manifest","Psişik","Web Geliştirme"];
+const kategoriler = ["Tarot","Spiritüel Dünya","Manifest","Psişik","Web Geliştirme","Okudugum Kitaplar"];
 
 const KategoriFiltresi = ({ aktifKategori, onKategoriSec }) => {
   return (
@@ -27,4 +27,5 @@ const KategoriFiltresi = ({ aktifKategori, onKategoriSec }) => {
 };
 
 export default KategoriFiltresi;
+
 
