@@ -6,7 +6,7 @@ const newsSchema = new mongoose.Schema(
     metin: { type: String, required: true },
     kategori: {
       type: String,
-      enum: ["tarot","manifest","spirituel","web geliştirme"],
+      enum: ["tarot","manifest","spirituel","web geliştirme","okudugum kitaplar"],
       required: true,
     },
   },
@@ -16,4 +16,5 @@ const newsSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("News", newsSchema);
+
 
