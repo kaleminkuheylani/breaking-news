@@ -30,13 +30,13 @@ export const getTekHaber = async (req, res) => {
 // POST /api/haber
 export const haberEkle = async (req, res) => {
   try {
-    const { baslik, metin, kategori, yazar } = req.body;
+    const { baslik, metin, kategori } = req.body;
 
     if (!baslik || !metin || !kategori) {
       return res.status(400).json({ message: "Tüm alanlar zorunludur." });
     }
 
-    const yeniHaber = new News({ baslik, metin, kategori, yazar });
+    const yeniHaber = new News({ baslik, metin, kategori });
     await yeniHaber.save();
 
     res.status(201).json(yeniHaber);
@@ -44,3 +44,4 @@ export const haberEkle = async (req, res) => {
     res.status(500).json({ message: "Haber eklenemedi", error: err });
   }
 };
+
