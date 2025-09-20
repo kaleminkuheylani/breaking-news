@@ -1,0 +1,122 @@
+import { useEffect, useState } from "react";
+import useHaberStore from "../lib/useHaberStore";
+import Sidebar from "./Sidebar";
+import KategoriFiltresi from "./KategoriFiltresi";
+
+
+const kategoriRenkleri = {
+  "tarot": "#3498db",
+  "okudugum kitaplar": "#e74c3c",
+  "hedefler": "#27ae60",
+  "spirituel dunya": "#9b59b6",
+  "psikoloji": "#f1c40f"
+};
+
+const Home = () => {
+const haberler = useHaberStore(state => state.haberler);
+const haberleriYukle = useHaberStore(state => state.haberleriYukle);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [aktifKategori, setAktifKategori] = useState("");
+
+ useEffect(() => {
+  haberleriYukle(aktifKategori || ""); // ✅ aktifKategori gönderiliyor
+}, [aktifKategori, haberleriYukle]);
+
+// Client-side filtering as backup (in case backend filtering fails)
+const filtreliHaberler = aktifKategori 
+  ? haberler.filter(haber => haber.kategori === aktifKategori)
+  : haberler;
+
+
+  return (
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      {/* Sidebar */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+      />
+
+      {/* İçerik Alanı */}
+      <div
+        style={{
+          flex: 1,
+          padding: "1rem",
+          marginLeft: sidebarOpen ? "300px" : "0",
+          transition: "margin 0.3s ease-in-out",
+        }}
+      >
+        {/* Kategori Filtresi */}
+        <KategoriFiltresi
+          aktifKategori={aktifKategori}
+          onKategoriSec={(kategori) => setAktifKategori(kategori)}
+        />
+
+        {/* Haber Listesi */}
+        {filtreliHaberler.length === 0 ? (
+          <p>Henüz haber bulunamadı.</p>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              gap: "1.5rem",
+              paddingTop: "1rem",
+            }}
+          >
+            {filtreliHaberler.map((haber) => {
+              const renk = kategoriRenkleri[haber.kategori] || "#7f8c8d";
+
+              return (
+                <div
+                  key={haber._id}
+                  style={{
+                    border: "1px solid #ddd",
+                    borderRadius: "10px",
+                    padding: "1.2rem",
+                    backgroundColor: "#f9f9f9",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+                    transition: "transform 0.2s ease",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.02)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
+                >
+                  <h4 style={{ marginBottom: "0.5rem" }}>{haber.baslik}</h4>
+                  <p style={{ color: "#444", fontSize: "0.95rem" }}>
+                    {haber.metin.length > 150
+                      ? haber.metin.substring(0, 150) + "..."
+                      : haber.metin}
+                  </p>
+
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginTop: "0.5rem",
+                      padding: "0.25rem 0.6rem",
+                      borderRadius: "12px",
+                      backgroundColor: renk,
+                      color: "#fff",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    {haber.kategori === "tarot" && "Tarot"}
+                    {haber.kategori === "okudugum kitaplar" && "Okuduğum Kitaplar"}
+                    {haber.kategori === "hedefler" && "Hedefler"}
+                    {haber.kategori === "spirituel dunya" && "Spirituel Dünya"}
+                    {haber.kategori === "psikoloji" && "Psikoloji"}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Home;
